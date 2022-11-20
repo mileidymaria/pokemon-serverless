@@ -2,10 +2,41 @@ service: serverless-pokemon
 
 frameworkVersion: '3'
 
+plugins:
+  - serverless-esbuild
+
 provider:
   name: aws
   runtime: nodejs16.x
 
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    exclude: 'aws-sdk'
+    target: node16
+    define:
+      'require.resolve': undefined
+    platform: node
+    concurrency: 10
+
+package:
+  individually: true
+
+
 functions:
-  hello:
-    handler: handler.hello
+  battle:
+    handler: src/functions/modules/battle/handler.battle
+    events:
+      - http:
+          path: battle
+          cors: true
+          method: post 
+
+layers:
+  pokemon-lib:
+    path: src/functions/lib
+    name: ${sls:stage}-pokemon-lib-layer
+    description: Layer for pokemon functions
+    compatibleRuntimes:
+      - nodejs16.x
