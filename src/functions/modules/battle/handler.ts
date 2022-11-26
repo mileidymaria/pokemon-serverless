@@ -1,10 +1,9 @@
-import { APIGatewayProxyEvent, Handler, Context } from 'aws-lambda';
+import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { Response } from '../../lib/http-response/model/Response';
 import { PokemonBattle } from '../../lib/pokemon/model/PokemonBattle';
 import { BattleController } from './controller/BattleController';
 import { IPokeReportRepository } from './repository/IPokeReportRepository';
 import { BattleUseCase } from './use-case/battle-use-case';
-const localOption = 'local';
 
 module.exports.battle = async (event: APIGatewayProxyEvent, context: Context) => {
 

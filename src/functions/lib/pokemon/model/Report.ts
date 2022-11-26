@@ -1,27 +1,20 @@
 import { PokeSnippet } from "../snippets/PokemonSnippet";
-import Moment from 'moment';
+import * as Moment from 'moment';
 import {v4 as Uuid} from 'uuid';
-
-export class BattleDetails{
-    
-
-}
 
 export class Report{
     id: string;
     pokeOne: PokeSnippet;
     pokeTwo: PokeSnippet;
     winnerId: string;
-    happenedAt: Date;
-    battleDetails?: BattleDetails;
+    happenedAt: string;
 
-    constructor(pokeOne: PokeSnippet, pokeTwo: PokeSnippet, winnerId: string, battleDetails: BattleDetails = {}){
+    constructor(pokeOne: PokeSnippet, pokeTwo: PokeSnippet, winnerId: string){
         this.pokeOne = pokeOne;
         this.pokeTwo = pokeTwo;
         this.winnerId = winnerId;
         this.id = Uuid();
-        this.happenedAt = Moment().toDate();
-        this.battleDetails = battleDetails;
+        this.happenedAt = Moment().format();
     }
 
     getBattleDescription() {

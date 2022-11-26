@@ -7,6 +7,7 @@ const DocClient = new DynamoDB.DocumentClient();
 export class IPokeReportRepository{
 
     static async put(report: Report){
+        console.log(`Saving the following report ${report}`);
         return DocClient.put({
             TableName: TABLE_NAME,
             Item: report

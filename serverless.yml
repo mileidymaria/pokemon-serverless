@@ -1,5 +1,4 @@
 service: serverless-pokemon
-
 frameworkVersion: '3'
 
 plugins:
@@ -8,8 +7,21 @@ plugins:
 provider:
   name: aws
   runtime: nodejs16.x
+  environment: 
+    POKEMON_REPORT_TABLE: ${self:custom.POKEMON_REPORT_TABLE}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - DynamoDB:Query
+        - DynamoDB:PutItem
+        - DynamoDB:GetItem
+        - DynamoDB:UpdateItem
+        - DynamoDB:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:*:*:table/${self:provider.environment.POKEMON_REPORT_TABLE}"
 
 custom:
+  POKEMON_REPORT_TABLE: poke-report
   esbuild:
     bundle: true
     minify: false
@@ -23,10 +35,12 @@ custom:
 package:
   individually: true
 
-
 functions:
   battle:
     handler: src/functions/modules/battle/handler.battle
+    layers:
+      - !Ref PokemonLibLambdaLayer
+      - !Ref PokemonBattleLibLambdaLayer
     events:
       - http:
           path: battle
@@ -34,9 +48,50 @@ functions:
           method: post 
 
 layers:
-  pokemon-lib:
+  PokemonLib:
     path: src/functions/lib
     name: ${sls:stage}-pokemon-lib-layer
     description: Layer for pokemon functions
     compatibleRuntimes:
       - nodejs16.x
+  PokemonBattleLib:
+    path: src/functions/modules/battle
+    name: ${sls:stage}-battle-pokemon-lib-layer
+    description: Layer for pokemon functions
+    compatibleRuntimes:
+      - nodejs16.x
+
+resources:
+  Resources:
+
+    PokemonTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: pokeId
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pokeId
+            KeyType: HASH
+          - AttributeName: name
+            KeyType: RANGE
+        ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+        
+
+    PokemonReportTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1   
+        TableName: ${self:custom.POKEMON_REPORT_TABLE}              
