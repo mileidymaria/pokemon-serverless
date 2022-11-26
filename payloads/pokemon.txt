@@ -1,0 +1,6 @@
+{
+    "name": "Pikachu",
+    "pokeType": "ELECTRIC",
+    "attack": 2000,
+    "defense":10000
+}

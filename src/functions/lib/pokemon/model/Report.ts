@@ -1,5 +1,5 @@
 import { PokeSnippet } from "../snippets/PokemonSnippet";
-import * as Moment from 'moment';
+import Moment from 'moment';
 import {v4 as Uuid} from 'uuid';
 
 export class Report{

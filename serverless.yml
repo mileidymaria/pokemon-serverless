@@ -9,6 +9,7 @@ provider:
   runtime: nodejs16.x
   environment: 
     POKEMON_REPORT_TABLE: ${self:custom.POKEMON_REPORT_TABLE}
+    POKEMON_TABLE: ${self:custom.POKEMON_TABLE}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -19,9 +20,11 @@ provider:
         - DynamoDB:DeleteItem
       Resource:
         - "arn:aws:dynamodb:*:*:table/${self:provider.environment.POKEMON_REPORT_TABLE}"
+        - "arn:aws:dynamodb:*:*:table/${self:provider.environment.POKEMON_TABLE}"
 
 custom:
   POKEMON_REPORT_TABLE: poke-report
+  POKEMON_TABLE: pokemon
   esbuild:
     bundle: true
     minify: false
@@ -46,6 +49,17 @@ functions:
           path: battle
           cors: true
           method: post 
+          
+  save:
+    handler: src/functions/modules/save-pokemon/handler.save
+    layers:
+      - !Ref PokemonLibLambdaLayer
+      - !Ref PokemonSaveLibLambdaLayer
+    events:
+      - http:
+          path: save
+          cors: true
+          method: post
 
 layers:
   PokemonLib:
@@ -60,10 +74,15 @@ layers:
     description: Layer for pokemon functions
     compatibleRuntimes:
       - nodejs16.x
+  PokemonSaveLib:
+    path: src/functions/modules/save-pokemon
+    name: ${sls:stage}-save-pokemon-lib-layer
+    description: Layer for pokemon functions
+    compatibleRuntimes:
+      - nodejs16.x
 
 resources:
   Resources:
-
     PokemonTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -80,8 +99,7 @@ resources:
         ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-        
-
+        TableName: ${self:custom.POKEMON_TABLE}
     PokemonReportTable:
       Type: AWS::DynamoDB::Table
       Properties:

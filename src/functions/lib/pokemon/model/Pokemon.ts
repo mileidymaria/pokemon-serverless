@@ -1,10 +1,10 @@
-import { v4 as uuid } from 'uuid';
 import Moment from 'moment';
+import {v4 as uuid } from 'uuid';
 
 export type PokeType = 'ELECTRIC' | 'FIRE' | 'WATER' | 'GRASS'
 
 export class Pokemon{
-    id: string;
+    pokeId: string;
     name: string;
     pokeType: PokeType;
     attack: number;
@@ -13,7 +13,7 @@ export class Pokemon{
     updatedAt: number;
 
     constructor(name: string, pokeType: PokeType, attack: number, defense: number){
-        this.id = uuid();
+        this.pokeId = uuid();
         this.name = name;
         this.pokeType = pokeType;
         this.attack = attack;

@@ -602,7 +602,9 @@
   },
   "homepage": "https://github.com/mileidymaria/pokemon-serverless#readme",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.109",
     "@types/chai": "^4.3.4",
-    "@types/jest": "^29.2.3"
+    "@types/jest": "^29.2.3",
+    "@types/uuid": "^8.3.4"
   }
 }

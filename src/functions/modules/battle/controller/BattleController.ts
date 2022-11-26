@@ -1,4 +1,4 @@
-import { Response } from "@functions/lib/http-response/model/Response";
+import { Response } from "../../../lib/http-response/model/Response";
 import { PokeSnippet } from "../../../lib/pokemon/snippets/PokemonSnippet";
 import { BattleUseCase } from "../use-case/battle-use-case";
 
@@ -11,6 +11,7 @@ export class BattleController{
     }
 
     execute = async (pokemonOne: PokeSnippet, pokemonTwo: PokeSnippet,) => {
-        return await new Response(200, JSON.stringify(this.battleUseCase.battle(pokemonOne, pokemonTwo)));;
+        const battleReport = await this.battleUseCase.battle(pokemonOne, pokemonTwo);
+        return new Response(200, JSON.stringify(battleReport));;
     }
 }
