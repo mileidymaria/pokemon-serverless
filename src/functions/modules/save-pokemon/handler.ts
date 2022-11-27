@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, Context, Handler } from 'aws-lambda';
 import { SavePokemonUseCase } from './use-case/save-pokemon-use-case';
-import { ISavePokemonController } from './controller/create-pokemon-controller.interface';
-import { SavePokemonController } from './controller/create-pokemon-controller';
+import { ISavePokemonController } from './controller/save-pokemon-controller.interface';
+import { SavePokemonController } from './controller/save-pokemon-controller';
 import { Pokemon } from '../../lib/pokemon/model/Pokemon';
 import { Response } from '../../lib/http-response/model/Response';
 

@@ -20,7 +20,7 @@ export class Report{
     getBattleDescription() {
         return `
         Pokemon ${this.pokeOne.name} and Pokemon ${this.pokeTwo.name} faced each other in a battle at ${this.happenedAt}. The winner was ${
-            this.winnerId == this.pokeOne.id ? this.pokeOne.name : this.pokeTwo.name 
+            this.winnerId == this.pokeOne.pokeId ? this.pokeOne.name : this.pokeTwo.name 
         }. The report was saved to database!
         `
     }

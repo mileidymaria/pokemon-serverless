@@ -9,7 +9,7 @@ export class Pokemon{
     pokeType: PokeType;
     attack: number;
     defense: number;
-    createdAt: Date;
+    createdAt: string;
     updatedAt: number;
 
     constructor(name: string, pokeType: PokeType, attack: number, defense: number){
@@ -18,7 +18,7 @@ export class Pokemon{
         this.pokeType = pokeType;
         this.attack = attack;
         this.defense = defense;
-        this.createdAt = Moment().toDate();
+        this.createdAt = Moment().format();
         this.updatedAt = Moment.now();
     }
 }

@@ -1,6 +1,6 @@
 import { Pokemon } from "../../../lib/pokemon/model/Pokemon";
 import { Response } from "../../../lib/http-response/model/Response"
-import { ISavePokemonController } from "./create-pokemon-controller.interface";
+import { ISavePokemonController } from "./save-pokemon-controller.interface";
 import { SavePokemonUseCase } from "../use-case/save-pokemon-use-case";
 
 export class SavePokemonController implements ISavePokemonController{

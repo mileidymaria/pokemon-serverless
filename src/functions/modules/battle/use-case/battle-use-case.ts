@@ -20,7 +20,7 @@ export class BattleUseCase{
             roundCount += 1;
         }
 
-        const winnerId = pokemonOne.defense <= 0 ? pokemonTwo.id : pokemonOne.id;
+        const winnerId = pokemonOne.defense <= 0 ? pokemonTwo.pokeId : pokemonOne.pokeId;
 
         const battleReport = new Report(pokemonOne, pokemonTwo, winnerId);
         

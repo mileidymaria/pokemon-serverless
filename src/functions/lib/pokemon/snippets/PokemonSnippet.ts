@@ -1,3 +1,3 @@
 import { Pokemon } from "../model/Pokemon";
 
-export type PokeSnippet = Pick<Pokemon, "id" | "name" | "attack" | "defense"> ;
+export type PokeSnippet = Pick<Pokemon, "pokeId" | "name" | "attack" | "defense"> ;

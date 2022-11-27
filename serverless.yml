@@ -60,6 +60,17 @@ functions:
           path: save
           cors: true
           method: post
+  
+  delete:
+    handler: src/functions/modules/delete-pokemon/handler.delete
+    layers:
+      - !Ref PokemonDeleteLibLambdaLayer
+      - !Ref PokemonLibLambdaLayer
+    events:
+      - http:
+          path: delete
+          cors: true
+          method: delete
 
 layers:
   PokemonLib:
@@ -80,6 +91,13 @@ layers:
     description: Layer for pokemon functions
     compatibleRuntimes:
       - nodejs16.x
+  PokemonDeleteLib: 
+    path: src/functions/modules/delete-pokemon
+    name: ${sls:stage}-delete-pokemon-lib-layer
+    description: Layer for pokemon functions
+    compatibleRuntimes:
+      - nodejs16.x
+
 
 resources:
   Resources:

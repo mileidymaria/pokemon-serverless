@@ -12,7 +12,7 @@ export class SavePokemonUseCase{
         try{
             await PokemonRepository.getInstance().savePokemon(pokemon);
             const savedPokemonSnippet: SavePokemonSnippet = {
-                id: pokemon.pokeId,
+                pokeId: pokemon.pokeId,
                 name: pokemon.name,
                 attack: pokemon.attack,
                 defense: pokemon.defense,
@@ -28,7 +28,7 @@ export class SavePokemonUseCase{
         }
 
         const errorSnippet: SavePokemonSnippet = {
-            id: "NO ID",
+            pokeId: "NO ID",
             name: pokemon.name,
             attack: pokemon.attack,
             defense: pokemon.defense,
