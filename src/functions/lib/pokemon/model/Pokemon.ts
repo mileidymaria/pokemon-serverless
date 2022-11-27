@@ -5,7 +5,7 @@ export type PokeType = 'ELECTRIC' | 'FIRE' | 'WATER' | 'GRASS'
 
 export class Pokemon{
     pokeId: string;
-    name: string;
+    pokeName: string;
     pokeType: PokeType;
     attack: number;
     defense: number;
@@ -14,7 +14,7 @@ export class Pokemon{
 
     constructor(name: string, pokeType: PokeType, attack: number, defense: number){
         this.pokeId = uuid();
-        this.name = name;
+        this.pokeName = name;
         this.pokeType = pokeType;
         this.attack = attack;
         this.defense = defense;

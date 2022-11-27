@@ -18,6 +18,7 @@ provider:
         - DynamoDB:GetItem
         - DynamoDB:UpdateItem
         - DynamoDB:DeleteItem
+        - DynamoDB:Scan
       Resource:
         - "arn:aws:dynamodb:*:*:table/${self:provider.environment.POKEMON_REPORT_TABLE}"
         - "arn:aws:dynamodb:*:*:table/${self:provider.environment.POKEMON_TABLE}"
@@ -61,6 +62,22 @@ functions:
           cors: true
           method: post
   
+  getAll:
+    handler: src/functions/modules/get-all-pokemons/handler.getAll
+    layers:
+      - !Ref PokemonGetAllLibLambdaLayer
+      - !Ref PokemonLibLambdaLayer
+    events:
+      - http:
+          path: pokemons
+          cors: true
+          method: get
+          request:
+            parameters:
+              querystrings:
+                pageSize: false
+                lastItem: false
+  
   delete:
     handler: src/functions/modules/delete-pokemon/handler.delete
     layers:
@@ -97,6 +114,12 @@ layers:
     description: Layer for pokemon functions
     compatibleRuntimes:
       - nodejs16.x
+  PokemonGetAllLib:
+    path: src/functions/modules/get-all-pokemons
+    name: ${sls:stage}-get-all-pokemon-lib-layer
+    description: Layer for pokemon functions
+    compatibleRuntimes:
+      - nodejs16.x
 
 
 resources:
@@ -107,12 +130,12 @@ resources:
         AttributeDefinitions:
           - AttributeName: pokeId
             AttributeType: S
-          - AttributeName: name
+          - AttributeName: pokeName
             AttributeType: S
         KeySchema:
           - AttributeName: pokeId
             KeyType: HASH
-          - AttributeName: name
+          - AttributeName: pokeName
             KeyType: RANGE
         ProvisionedThroughput:
             ReadCapacityUnits: 1

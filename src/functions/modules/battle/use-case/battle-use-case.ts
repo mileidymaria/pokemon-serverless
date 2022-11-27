@@ -11,12 +11,12 @@ export class BattleUseCase{
     }
 
     async battle (pokemonOne: PokeSnippet, pokemonTwo: PokeSnippet){
-        console.log(`BATTLE STARTED:: ${pokemonOne.name} X ${pokemonTwo.name}`);
+        console.log(`BATTLE STARTED:: ${pokemonOne.pokeName} X ${pokemonTwo.pokeName}`);
         let roundCount = 1;
         while((pokemonOne.defense || pokemonTwo.defense) > 0){
             pokemonOne.defense -= pokemonTwo.attack;
             pokemonTwo.defense -= pokemonOne.attack;
-            console.log(`BATTLE ROUND:: ROUND ${roundCount} :: \n ${pokemonOne.name} -> DEFENSE = ${pokemonOne.defense} \n ${pokemonTwo.name} -> DEFENSE = ${pokemonTwo.defense}`)
+            console.log(`BATTLE ROUND:: ROUND ${roundCount} :: \n ${pokemonOne.pokeName} -> DEFENSE = ${pokemonOne.defense} \n ${pokemonTwo.pokeName} -> DEFENSE = ${pokemonTwo.defense}`)
             roundCount += 1;
         }
 

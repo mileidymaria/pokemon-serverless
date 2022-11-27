@@ -8,14 +8,14 @@ jest.mock('../modules/battle/repository/IPokeReportRepository');
 
 const pokemonOne: PokeSnippet = {
     pokeId: "123e4567-e89b-12d3-a456-426614174000",
-    name: "pikachu",
+    pokeName: "pikachu",
     attack: 2000,
     defense: 10000
 }
 
 const pokemonTwo: PokeSnippet = {
     "pokeId": "123e4567-e89b-12d3-a456-526614174000",
-    "name": "charmander",
+    "pokeName": "charmander",
     "attack": 3000,
     "defense": 12000
 }
